@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import {
   collection,
   getDocs,
@@ -9,17 +8,15 @@ import {
   limit,
   startAfter,
 } from "firebase/firestore";
-import { db } from "../firebase.config.js";
+import { db } from "../firebase.config";
 import { toast } from "react-toastify";
 import Spinner from "../components/Spinner";
-import ListingItem from "../components/ListingItem.jsx";
+import ListingItem from "../components/ListingItem";
 
 function Offers() {
   const [listings, setListings] = useState(null);
   const [loading, setLoading] = useState(true);
   const [lastFetchedListing, setLastFetchedListing] = useState(null);
-
-  const params = useParams();
 
   useEffect(() => {
     const fetchListings = async () => {
@@ -64,12 +61,12 @@ function Offers() {
   const onFetchMoreListings = async () => {
     try {
       // Get reference
-      const listingsRef = collection(db, "listings");
+      const listingsRef = collection(db, "listing");
 
       // Create a query
       const q = query(
         listingsRef,
-        where("type", "==", params.categoryName),
+        where("offer", "==", true),
         orderBy("timestamp", "desc"),
         startAfter(lastFetchedListing),
         limit(10)
@@ -100,7 +97,7 @@ function Offers() {
   return (
     <div className="category">
       <header>
-        <p className="pageHeader">offers</p>
+        <p className="pageHeader">Offers</p>
       </header>
 
       {loading ? (
@@ -128,7 +125,7 @@ function Offers() {
           )}
         </>
       ) : (
-        <p>There are no current offers </p>
+        <p>There are no current offers</p>
       )}
     </div>
   );

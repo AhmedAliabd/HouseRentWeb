@@ -9,10 +9,10 @@ import {
   limit,
   startAfter,
 } from "firebase/firestore";
-import { db } from "../firebase.config.js";
+import { db } from "../firebase.config";
 import { toast } from "react-toastify";
 import Spinner from "../components/Spinner";
-import ListingItem from "../components/ListingItem.jsx";
+import ListingItem from "../components/ListingItem";
 
 function Category() {
   const [listings, setListings] = useState(null);
@@ -64,7 +64,7 @@ function Category() {
   const onFetchMoreListings = async () => {
     try {
       // Get reference
-      const listingsRef = collection(db, "listings");
+      const listingsRef = collection(db, "listing");
 
       // Create a query
       const q = query(
